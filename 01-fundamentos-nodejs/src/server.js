@@ -1,17 +1,26 @@
 import http from "node:http";
 
+const users = [];
+
 const server = http.createServer((req, res) => {
     const { method, url } = req;
 
     if (method === "GET" && url === "/users") {
-        return res.end("Listagem de Users");
+        return res
+            .setHeader("Content-Type", "application/json")
+            .end(JSON.stringify(users));
     }
 
     if (method === "POST" && url === "/users") {
-        return res.end("Criação de User")
+        users.push({
+            id: 1,
+            name: "Gustavo Petry",
+            email: "ogustavo@gmail.com"
+        });
+        return res.writeHead(201).end();
     }
 
-    return res.end("Hello World!");
+    return res.writeHead(404).end("Not Found");
 });
 
 server.listen(3333);
