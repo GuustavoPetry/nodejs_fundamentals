@@ -1,7 +1,8 @@
 import http from "node:http";
 import { json } from "../middlewares/json.js";
+import { Database } from "../middlewares/database.js";
 
-const users = [];
+const database = new Database();
 
 const server = http.createServer(async (req, res) => {
     const { method, url } = req;
@@ -9,22 +10,23 @@ const server = http.createServer(async (req, res) => {
     // Middleware que converte os dados da requisição em JSON
     await json(req, res);
 
-    console.log(req.body);
-
     if (method === "GET" && url === "/users") {
-        return res
-            .end(JSON.stringify(users));
+        const users = database.select("users");
+        return res.end(JSON.stringify(users));
     }
 
     if (method === "POST" && url === "/users") {
         const { name, email } = req.body;
 
-        users.push({
+        const user = {
             id: 1,
             name,
             email
-        });
-        return res.writeHead(201).end();
+        };
+
+        database.insert("users", user);
+
+        return res.writeHead(201).end(JSON.stringify(user));
     }
 
     return res.writeHead(404).end("Not Found");
