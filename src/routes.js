@@ -32,7 +32,7 @@ export const routes = [
     },
     {
         method: "DELETE",
-        path: buildRoutePath("/users/:id"), // Regex
+        path: buildRoutePath("/users/:id/groups/:groupId"), // Regex
         handler: (req, res) => {
             return res.end();
         }
