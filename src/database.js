@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 
-    // Define o caminho que o arquivo db.json será salvo
-    const databasePath = new URL("../db.json", import.meta.url);
+// Define o caminho que o arquivo db.json será salvo
+const databasePath = new URL("../db.json", import.meta.url);
 
 export class Database {
     // # -> define uma propriedade ou método de classe como Private, não pode ser acessada por outros arquivos
